@@ -57,54 +57,55 @@ taxes = [
 
 # deparmens
 def all_deparment():
-    for element in departments:
-        print(f"Отдел: {element['title']}")
+    for deparment in departments:
+        print(f"Отдел: {deparment['title']}")
 
 #names
 def all_employers():
-    for el in departments:
-        for name in el['employers']:
-            print(name['first_name'], name['last_name'], sep=' ')
+    for deparment in departments:
+        for employers in deparment['employers']:
+            print(employers['first_name'], employers['last_name'], sep=' ')
 
 #names + depatmens
-def name_and_dep():
-    for el in departments:
-        for name in el['employers']:
-            print(f"{el['title']}: {name['first_name']} {name['last_name']}")
+def name_and_departament():
+    for department in departments:
+        for employer in department['employers']:
+            print(f"{department['title']}: {employer['first_name']} {employer['last_name']}")
 
 # names >= 100 k salary
 
 def rich_bitch():
-    for el in departments:
-        for name in el['employers']:
-            if name['salary_rub'] >= 100000:
-                print(f"{name['first_name']} {name['last_name']} is rich bitch")
+    for department in departments:
+        for employer in department['employers']:
+            if employer['salary_rub'] >= 100000:
+                print(f"{employer['first_name']} {employer['last_name']} is rich bitch")
             else:
                 continue
 
 # salay less than 80 000
 def low_salary():
-    for el in departments:
-        for name in el['employers']:
-            if name['salary_rub'] < 80000:
-                print(f"Position: {name['position']} earns lower than 80 000 rub.")
+    for department in departments:
+        for employer in department['employers']:
+            if employer['salary_rub'] < 80000:
+                print(f"Position: {employer['position']} earns lower than 80 000 rub.")
             else:
                 continue
 
 # Сколько денег на отдел(тут фантазия на инглиш у меня коничалась)
-def dep_sum():
-    for el in departments:
+def department_sum():
+    for department in departments:
         sum_salary = 0
-        for rub in el['employers']:
-            sum_salary += rub['salary_rub']
-        print(f"{el['title']} sum of dalary is {sum_salary}")
+        for employer in department['employers']:    
+            sum_salary += employer['salary_rub']
+        
+        print(f"{department['title']} sum of salary is {sum_salary}")
 
 # первый блок готов        
 
 if __name__ == '__main__':
     all_deparment()
     all_employers()
-    name_and_dep()
+    name_and_departament()
     rich_bitch()
     low_salary()
-    dep_sum()
+    department_sum()
