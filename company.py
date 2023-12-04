@@ -52,3 +52,58 @@ taxes = [
     {"department": "IT Department", "name": "hiring", "value_percents": 6},
     {"department": "BizDev Department", "name": "sales", "value_percents": 20},
 ]
+
+# Первый блок
+
+# deparmens
+def all_deparment():
+    for element in departments:
+        print(f"Отдел: {element['title']}")
+
+#names
+def all_employers():
+    for el in departments:
+        for name in el['employers']:
+            print(name['first_name'], name['last_name'], sep=' ')
+
+#names + depatmens
+def name_and_dep():
+    for el in departments:
+        for name in el['employers']:
+            print(f"{el['title']}: {name['first_name']} {name['last_name']}")
+
+# names >= 100 k salary
+
+def rich_bitch():
+    for el in departments:
+        for name in el['employers']:
+            if name['salary_rub'] >= 100000:
+                print(f"{name['first_name']} {name['last_name']} is rich bitch")
+            else:
+                continue
+
+# salay less than 80 000
+def low_salary():
+    for el in departments:
+        for name in el['employers']:
+            if name['salary_rub'] < 80000:
+                print(f"Position: {name['position']} earns lower than 80 000 rub.")
+            else:
+                continue
+
+# Сколько денег на отдел(тут фантазия на инглиш у меня коничалась)
+def dep_sum():
+    for el in departments:
+        sum_salary = 0
+        for rub in el['employers']:
+            sum_salary += rub['salary_rub']
+        print(f"{el['title']} sum of dalary is {sum_salary}")
+        
+
+if __name__ == '__main__':
+    all_deparment()
+    all_employers()
+    name_and_dep()
+    rich_bitch()
+    low_salary()
+    dep_sum()
