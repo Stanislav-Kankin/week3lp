@@ -98,7 +98,8 @@ def dep_sum():
         for rub in el['employers']:
             sum_salary += rub['salary_rub']
         print(f"{el['title']} sum of dalary is {sum_salary}")
-        
+
+# первый блок готов        
 
 if __name__ == '__main__':
     all_deparment()
