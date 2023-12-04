@@ -54,6 +54,7 @@ taxes = [
 ]
 
 # Первый блок
+import statistics
 
 # deparmens
 def all_deparment():
@@ -99,8 +100,74 @@ def department_sum():
             sum_salary += employer['salary_rub']
         
         print(f"{department['title']} sum of salary is {sum_salary}")
+        
 
-# первый блок готов        
+# первый блок готов      
+
+# Второй блок:
+
+
+# отделы и мин зарлата в них
+def departament_min_salary():
+    for department in departments:
+        list_salary = []
+        for salary in department['employers']:    
+            list_salary.append(salary['salary_rub'])
+        print(f"Самая низкая зарплата в {department['title']}: {min(list_salary)}")
+
+# min, max, average salary
+def departament_min_average_max_salary():
+    for department in departments:
+        list_salary = []
+        for salary in department['employers']:    
+            list_salary.append(salary['salary_rub'])
+        print()
+        print(f"Самая низкая зарплата в {department['title']}: {min(list_salary)}")
+        print(f"Средняя зарплата в {department['title']}: {statistics.mean(list_salary)}")
+        print(f"Самая высокая зарплата в {department['title']}: {max(list_salary)}")
+        
+# avrage salaty by company
+def average_salary():
+    list_salary = []
+    for department in departments:
+        for salary in department['employers']:    
+            list_salary.append(salary['salary_rub'])
+    print()
+    print(f"Средняя зарплата в компании: {statistics.mean(list_salary)}")
+
+# more than 90 000 rub positions
+def position_big_salary():
+    for departament in departments:
+        for position in departament['employers']:
+            if position['salary_rub'] > 90_000:
+                print(f"Зарабатывает более 90 000 рублей позиция: {position['position']}")
+
+
+#average salary by women
+def female_average_salary():
+    women =  ("Michelle", "Caitlin", "Nicole", "Christina")
+    women_salary = []
+    for departament in departments:
+        for salary in departament['employers']:
+            if salary['first_name'] in women:
+                women_salary.append(salary['salary_rub'])
+            else:
+                continue
+    print(f"Средняя зарплата среди женщин: {statistics.mean(women_salary)}")
+
+#Вывод имени по гласной букве в фамилии
+def last_name_vowel():
+    vowels = ('a','e', 'i' 'u', 'o','u', 'y')
+    for departament in departments:
+        for last_name in departament['employers']:
+            if last_name['last_name'][-1] in vowels:
+                print(f"Имя, фамилия которого заканчивается на гласную: {last_name['last_name']}")
+            else:
+                continue
+         
+# Второй блок всё!!!
+
+
 
 if __name__ == '__main__':
     all_deparment()
@@ -109,3 +176,9 @@ if __name__ == '__main__':
     rich_bitch()
     low_salary()
     department_sum()
+    departament_min_salary()
+    departament_min_average_max_salary()
+    average_salary()
+    position_big_salary()
+    female_average_salary()
+    last_name_vowel()
