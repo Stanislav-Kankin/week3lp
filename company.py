@@ -58,13 +58,13 @@ import statistics
 
 # deparmens
 def all_deparment():
-    for deparment in departments:
-        print(f"Отдел: {deparment['title']}")
+    for department in departments:
+        print(f"Отдел: {department['title']}")
 
 #names
 def all_employers():
-    for deparment in departments:
-        for employers in deparment['employers']:
+    for department in departments:
+        for employers in department['employers']:
             print(employers['first_name'], employers['last_name'], sep=' ')
 
 #names + depatmens
@@ -168,6 +168,105 @@ def last_name_vowel():
 # Второй блок всё!!!
 
 
+# Третий блок
+
+# Вывести список отделов со средним налогом на сотрудников этого отдела.
+
+def averege_department_taxes():
+    for deparment in departments:
+        current_tax = 0
+        deparment_name = deparment['title']
+        for tax in taxes:
+            if tax['department'] is None or tax['department'].lower() == deparment_name.lower():
+                current_tax += tax['value_percents']
+        tax_sum = 0.0
+        for employer in deparment['employers']:
+            tax_sum += employer['salary_rub'] * current_tax / 100
+        print(f"Средний налог в {deparment_name}: {tax_sum / len(deparment['employers'])} рублей.")    
+           
+
+
+# Вывести список всех сотредников с указанием зарплаты "на руки" и зарплаты с учётом налогов.
+# Господи, надеюсь я правильно понял задание))))))))))))))
+
+def salary_taxed_untaxed():
+    for department in departments:
+        deparment_name = department['title']
+        current_tax = 0
+        for tax in taxes:
+            if tax['department'] is None or tax['department'].lower() == deparment_name.lower():
+                current_tax += tax['value_percents']
+        for employer in department['employers']:
+            employer_name = f"{employer['first_name']} {employer['last_name']}"
+            employer_salary = employer['salary_rub']
+            employer_salary_taxed = employer_salary - (employer_salary * current_tax / 100)
+            print(f"""Имя сотрудника: {employer_name}
+Жалование с учетом налога: {float(employer_salary)} 
+Жалование после вычета налога: {employer_salary_taxed}
+""")
+            
+
+#  Вывести список отделов, отсортированный по месячной налоговой нагрузки.
+
+def tax_per_mounth():
+    for deparment in departments:
+        current_tax = 0
+        deparment_name = deparment['title']
+        for tax in taxes:
+            if tax['department'] is None or tax['department'].lower() == deparment_name.lower():
+                current_tax += tax['value_percents']
+        tax_sum = 0.0
+        for employer in deparment['employers']:
+            tax_sum += employer['salary_rub'] * current_tax / 100
+            
+        print(f"Отдел:{deparment_name} сумма налогов: {tax_sum}")
+            
+        
+
+
+# Вывести всех сотрудников, за которых компания платит больше 100к налогов в год.
+
+def tax_per_year():
+    for department in departments:
+        deparment_name = department['title']
+        current_tax = 0
+        for tax in taxes:
+            if tax['department'] is None or tax['department'].lower() == deparment_name.lower():
+                current_tax += tax['value_percents']
+        for employer in department['employers']:
+            employer_name = f"{employer['first_name']} {employer['last_name']}"
+            employer_salary = employer['salary_rub']
+            tax_per_year = (employer_salary * current_tax / 100) * 12
+            if tax_per_year > 100_000.0:
+                print(f"""
+За сотрудника {employer_name} 
+Компания платит: {tax_per_year} в год.""")
+
+# Вывести имя и фамилию сотрудника, за которого компания платит меньше всего налогов.
+
+def min_tax_employer():
+    min_tax_value = 999999999.0
+    for department in departments:
+        deparment_name = department['title']
+        current_tax = 0
+               
+        for tax in taxes:
+            if tax['department'] is None or tax['department'].lower() == deparment_name.lower():
+                current_tax += tax['value_percents']
+                
+        for employer in department['employers']:
+            employer_name = f"{employer['first_name']} {employer['last_name']}"
+            employer_salary = employer['salary_rub']
+            employer_tax = employer_salary * current_tax / 100
+            
+            if min_tax_value > employer_tax:
+                min_tax_value = employer_tax
+            else:
+                continue
+            print(f"Самый низкий налог в компании на сотрудника: {employer_name} - {min_tax_value} руб.")
+        
+
+
 
 if __name__ == '__main__':
     all_deparment()
@@ -182,3 +281,8 @@ if __name__ == '__main__':
     position_big_salary()
     female_average_salary()
     last_name_vowel()
+    averege_department_taxes()
+    salary_taxed_untaxed()
+    tax_per_mounth()
+    tax_per_year()
+    min_tax_employer()
