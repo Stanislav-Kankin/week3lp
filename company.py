@@ -179,10 +179,10 @@ def averege_department_taxes():
         for tax in taxes:
             if tax['department'] is None or tax['department'].lower() == deparment_name.lower():
                 current_tax += tax['value_percents']
-        tax_sum = 0.0
+        tax_sum = 0
         for employer in deparment['employers']:
             tax_sum += employer['salary_rub'] * current_tax / 100
-        print(f"Средний налог в {deparment_name}: {tax_sum / len(deparment['employers'])} рублей.")    
+        print(f"Средний налог в {deparment_name}: {round(tax_sum / len(deparment['employers']))} рублей.")    
            
 
 
@@ -201,8 +201,8 @@ def salary_taxed_untaxed():
             employer_salary = employer['salary_rub']
             employer_salary_taxed = employer_salary - (employer_salary * current_tax / 100)
             print(f"""Имя сотрудника: {employer_name}
-Жалование с учетом налога: {float(employer_salary)} 
-Жалование после вычета налога: {employer_salary_taxed}
+Жалование с учетом налога: {employer_salary} 
+Жалование после вычета налога: {round(employer_salary_taxed)}
 """)
             
 
@@ -215,11 +215,11 @@ def tax_per_mounth():
         for tax in taxes:
             if tax['department'] is None or tax['department'].lower() == deparment_name.lower():
                 current_tax += tax['value_percents']
-        tax_sum = 0.0
+        tax_sum = 0
         for employer in deparment['employers']:
             tax_sum += employer['salary_rub'] * current_tax / 100
             
-        print(f"Отдел:{deparment_name} сумма налогов: {tax_sum}")
+        print(f"Отдел:{deparment_name} сумма налогов: {round(tax_sum)}")
             
         
 
@@ -240,12 +240,12 @@ def tax_per_year():
             if tax_per_year > 100_000.0:
                 print(f"""
 За сотрудника {employer_name} 
-Компания платит: {tax_per_year} в год.""")
+Компания платит: {round(tax_per_year)} в год.""")
 
 # Вывести имя и фамилию сотрудника, за которого компания платит меньше всего налогов.
 
 def min_tax_employer():
-    min_tax_value = 999999999.0
+    min_tax_value = 999999999
     for department in departments:
         deparment_name = department['title']
         current_tax = 0
@@ -257,7 +257,7 @@ def min_tax_employer():
         for employer in department['employers']:
             employer_name = f"{employer['first_name']} {employer['last_name']}"
             employer_salary = employer['salary_rub']
-            employer_tax = employer_salary * current_tax / 100
+            employer_tax = round(employer_salary * current_tax / 100)
             
             if min_tax_value > employer_tax:
                 min_tax_value = employer_tax
